@@ -135,58 +135,135 @@
         </div>
     </div>
 <script>
-async function cariData() {
-    const input = document.getElementById("searchInput").value.trim().toLowerCase();
-    const hasil = document.getElementById("hasil");
+let dataPeserta = [];
 
-    if (!input) {
-        hasil.innerHTML = "<p>Silakan masukkan Nama atau ID Peserta.</p>";
-        return;
-    }
-
+// Membaca data CSV saat halaman dibuka
+async function loadData() {
     try {
         const response = await fetch("FILECOBA.csv");
         const csvText = await response.text();
 
-        const rows = csvText.split(/\r?\n/).filter(row => row.trim() !== "");
+        const rows = csvText
+            .split(/\r?\n/)
+            .filter(row => row.trim() !== "");
 
-        const data = rows.slice(1).map(row => {
+        dataPeserta = rows.slice(1).map(row => {
             const values = row.split(",");
 
             return {
-                id: values[0]?.trim(),
-                nama: values[1]?.trim(),
-                sekolah: values[2]?.trim(),
-                level: values[3]?.trim(),
-                mapel: values[4]?.trim()
+                id: values[0]?.trim() || "",
+                nama: values[1]?.trim() || "",
+                sekolah: values[2]?.trim() || "",
+                level: values[3]?.trim() || "",
+                mapel: values[4]?.trim() || ""
             };
         });
 
-        const peserta = data.find(item =>
-            item.nama.toLowerCase() === input ||
-            item.id.toLowerCase() === input
-        );
-
-        if (peserta) {
-            hasil.innerHTML = `
-                <div class="hasil-data">
-                    <h2>🎉 Data Finalis Ditemukan</h2>
-                    <p>🆔 <strong>ID Peserta:</strong> ${peserta.id}</p>
-                    <p>👤 <strong>Nama:</strong> ${peserta.nama}</p>
-                    <p>🏫 <strong>Asal Sekolah:</strong> ${peserta.sekolah}</p>
-                    <p>📚 <strong>Level:</strong> ${peserta.level}</p>
-                    <p>🏆 <strong>Mapel:</strong> ${peserta.mapel}</p>
-                </div>
-            `;
-        } else {
-            hasil.innerHTML = "<p>❌ Data peserta tidak ditemukan.</p>";
-        }
-
     } catch (error) {
-        hasil.innerHTML = "<p>⚠️ File FILECOBA.csv tidak dapat dibaca.</p>";
-        console.error(error);
+        console.error("CSV tidak dapat dibaca:", error);
     }
 }
+
+
+// Pencarian nama secara otomatis
+document.getElementById("searchInput").addEventListener("input", function () {
+
+    const input = this.value.trim().toLowerCase();
+    const saran = document.getElementById("saranNama");
+
+    saran.innerHTML = "";
+
+    if (!input) {
+        return;
+    }
+
+    const hasilPencarian = dataPeserta.filter(item =>
+        item.nama.toLowerCase().includes(input)
+    );
+
+    hasilPencarian.slice(0, 10).forEach(peserta => {
+
+        const div = document.createElement("div");
+
+        div.className = "saran-item";
+
+        div.innerHTML = `
+            👤 <strong>${peserta.nama}</strong>
+            <br>
+            <small>${peserta.sekolah}</small>
+        `;
+
+        div.onclick = function () {
+
+            document.getElementById("searchInput").value = peserta.nama;
+
+            saran.innerHTML = "";
+
+            tampilkanData(peserta);
+        };
+
+        saran.appendChild(div);
+    });
+
+    if (hasilPencarian.length === 0) {
+        saran.innerHTML = `
+            <div class="saran-item">
+                ❌ Nama tidak ditemukan
+            </div>
+        `;
+    }
+});
+
+
+// Menampilkan data peserta
+function tampilkanData(peserta) {
+
+    const hasil = document.getElementById("hasil");
+
+    hasil.innerHTML = `
+        <div class="hasil-data">
+            <h2>🎉 Data Finalis Ditemukan</h2>
+
+            <p>🆔 <strong>ID Peserta:</strong> ${peserta.id}</p>
+
+            <p>👤 <strong>Nama:</strong> ${peserta.nama}</p>
+
+            <p>🏫 <strong>Asal Sekolah:</strong> ${peserta.sekolah}</p>
+
+            <p>📚 <strong>Level:</strong> ${peserta.level}</p>
+
+            <p>🏆 <strong>Mapel:</strong> ${peserta.mapel}</p>
+        </div>
+    `;
+}
+
+
+// Tombol Cari Data
+function cariData() {
+
+    const input = document
+        .getElementById("searchInput")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const peserta = dataPeserta.find(item =>
+        item.nama.toLowerCase() === input ||
+        item.id.toLowerCase() === input
+    );
+
+    if (peserta) {
+        tampilkanData(peserta);
+    } else {
+        document.getElementById("hasil").innerHTML =
+            "<p>❌ Data peserta tidak ditemukan.</p>";
+    }
+}
+
+
+// Jalankan pembacaan CSV
+loadData();
+    
 </script>
 </body>
 </html>

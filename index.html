@@ -157,6 +157,11 @@ let dataPeserta = [];
 async function loadData() {
     try {
         const response = await fetch("FILECOBA.csv");
+
+        if (!response.ok) {
+            throw new Error("File CSV tidak ditemukan");
+        }
+
         const csvText = await response.text();
 
         const rows = csvText
@@ -164,16 +169,17 @@ async function loadData() {
             .filter(row => row.trim() !== "");
 
         dataPeserta = rows.slice(1).map(row => {
-            // Menggunakan titik koma (;) sesuai dengan file CSV Anda
-            const values = row.split(";");
+            const values = row.split(";").map(value =>
+                value.trim().replace(/^"|"$/g, "")
+            );
 
             return {
-                id: values[0]?.trim() || "",
-                nama: values[1]?.trim() || "",
-                sekolah: values[2]?.trim() || "",
-                level: values[3]?.trim() || "",
-                mapel: values[4]?.trim() || "",
-                linkwa: values[5]?.trim() || ""
+                id: values[0] || "",
+                nama: values[1] || "",
+                sekolah: values[2] || "",
+                level: values[3] || "",
+                mapel: values[4] || "",
+                linkwa: values[5] || ""
             };
         });
 
@@ -239,7 +245,11 @@ function tampilkanData(peserta) {
             <p>🏫 <strong>Asal Sekolah:</strong> ${peserta.sekolah}</p>
             <p>📚 <strong>Level:</strong> ${peserta.level}</p>
             <p>🏆 <strong>Mapel:</strong> ${peserta.mapel}</p>
-            <P>🗨️ <strong>Link Wa:</strong> ${peserta.linkwa}</p>
+            <p>🗨️ <strong>Link WA:</strong>
+            <a href="${peserta.linkwa}" target="_blank">
+            Gabung Grup / Buka Link
+            </a>
+            </p>
         </div>
     `;
 }

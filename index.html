@@ -179,7 +179,9 @@ async function loadData() {
                 sekolah: values[2] || "",
                 level: values[3] || "",
                 mapel: values[4] || "",
-                linkwa: values[5] || ""
+                linkenglish: values[5] || "",
+                linkmath: values[6] || "",
+                linksains: values[7] || ""
             };
         });
 
@@ -242,16 +244,22 @@ function tampilkanData(peserta) {
             <h2 style="font-size:18px; margin-top:0;">🎉 Data Peserta Ditemukan</h2>
             <p>🆔 <strong>ID Peserta/Username&Password:</strong> ${peserta.id}</p>
             <p>👤 <strong>Nama:</strong> ${peserta.nama}</p>
-            <p>🏫 <strong>Asal Sekolah:</strong> ${peserta.asalsekolah}</p>
+            <p>🏫 <strong>Asal Sekolah:</strong> ${peserta.sekolah}</p>
             <p>📚 <strong>Level:</strong> ${peserta.level}</p>
             <p>🏆 <strong>Mapel:</strong> ${peserta.mapel}</p>
-            <p>🗨️ <strong>Link WA:</strong><br>
-                <a href="${peserta.linkwa}" 
-                   target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-link">
-                    📲 KLIK DI SINI UNTUK GABUNG
-                </a>
+            <p><strong>🗨️ LINK GRUP WHATSAPP FINAL:</strong></p>
+
+            <a href="${peserta.linkenglish}" target="_blank" class="btn-link">
+            📘 GRUP WHATSAPP ENGLISH
+            </a>
+
+            <a href="${peserta.linkmath}" target="_blank" class="btn-link">
+            📐 GRUP WHATSAPP MATH
+            </a>
+
+            <a href="${peserta.linksains}" target="_blank" class="btn-link">
+            🧬 GRUP WHATSAPP SAINS
+            </a>
             </p>
         </div>
     `;

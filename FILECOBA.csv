@@ -1,3 +1,3 @@
-ID PESERTA;NAMA;ASAL SEKOLAH;LEVEL;MAPEL;LINK WA
-FNE1111;"Prof. H. MUHAMMAD ANDI ISYA M.Pd.";CHEONGA UNIVERSSS;LEVEL 1;ENGLISH;https://www.e-ujian.com/aisinstitute
-FNE1112;"Hj. YUNI MAULIDIYAH M.Pd.";HOGWARTSSS HARI PO'AH;LEVEL 1;MATH;https://www.e-ujian.com/aisinstitute
+ID PESERTA;NAMA;ASAL SEKOLAH;LEVEL;MAPEL;LINK WA ENGLISH;LINK WA MATH;LINK WA SAINS
+FNE1111;"Prof. H. MUHAMMAD ANDI ISYA M.Pd.";CHEONGA UNIVERSSS;LEVEL 1;ENGLISH;https://www.e-ujian.com/aisinstitute;https://www.youtube.com/@aisinstitutejawatimur;https://aiscerdas.com/
+FNE1112;"Hj. YUNI MAULIDIYAH M.Pd.";HOGWARTSSS HARI PO'AH;LEVEL 1;MATH;https://www.e-ujian.com/aisinstitute;https://www.youtube.com/@aisinstitutejawatimur;https://aiscerdas.com/

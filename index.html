@@ -245,10 +245,13 @@ function tampilkanData(peserta) {
             <p>🏫 <strong>Asal Sekolah:</strong> ${peserta.asalsekolah}</p>
             <p>📚 <strong>Level:</strong> ${peserta.level}</p>
             <p>🏆 <strong>Mapel:</strong> ${peserta.mapel}</p>
-            <p>🗨️ <strong>Link WA:</strong>
-            <a href="${peserta.linkwa}" target="_blank">
-            Gabung Grup / Buka Link
-            </a>
+            <p>🗨️ <strong>Link WA:</strong><br>
+                <a href="${peserta.linkwa}" 
+                   target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-link">
+                    📲 KLIK DI SINI UNTUK GABUNG
+                </a>
             </p>
         </div>
     `;
